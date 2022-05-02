@@ -24,6 +24,7 @@ barChartWidth = width/2
 barChartHeight = height/2
 rec = 0
 text = 0
+spiderG = 0
 
 canvas.create_line(0,height/2,width, height/2, fill = "#b30047") 
 canvas.create_line(width/2,0,width/2,height, fill = "#b30047")
@@ -31,9 +32,9 @@ canvas.create_line(50,0,50,height/2 - 50)
 canvas.create_line(50,height/2 - 50,width/2-50,height/2 - 50)
 def getData():
     global data1, data2, data3, data
-    data1 = random.randrange(100)
-    data2 = random.randrange(100)
-    data3 = random.randrange(100)
+    data1 = random.randrange(1,100)
+    data2 = random.randrange(1,100)
+    data3 = random.randrange(1,100)
     data = [data1, data2, data3]
     
 
@@ -122,24 +123,28 @@ def pieChart():
 
 
 def spiderChart():
-    global red,width,height,cntPointX,cntPointY,side,triangleHeight,a,b,s,c
-    cntPointX = width*3/4
-    cntPointY = height*3/4
+    global red,width,height,cntPoint,side,triangleHeight,a,b,s,c,data,dataA,dataB,dataC,dataS,dataS2,K_A,K_B,K_C,spiderG
+    cntPoint = width*3/4 , height*3/4
+    
     s = complex(2*sin(1.047198)*100)
+    
     side = real(s)
     triangleHeight = 150
+    dataS = side/100 * data[2]
+    dataS2 = side/100 * data[1]
     a = 3/4*width,height - 100
     b = (3/4*width + side/2),height - 100 - math.sqrt(side**2 - (side/2)**2)
     c = (3/4*width - side/2),height - 100 - math.sqrt(side**2 - (side/2)**2)
     canvas.create_polygon((a, b, c), outline=red)
 
-
-
-def motion(event):
-    x, y = event.x, event.y
-    print('{}, {}'.format(x, y))
-
-#canvas.bind('<Motion>', motion)
+    K_A = 100/data[1]
+    K_B = 100/data[2]
+    K_C = 100/data[0]
+    dataA = 3/4*width, height - 100 - (100-data[1]) 
+    dataB = (3/4*width + side/2) - 75 +(75/K_B),height - 100 - math.sqrt(side**2 - (side/2)**2) +50 -(50/K_B) 
+    dataC = (3/4*width - side/2) + 75 -(75/K_C),height - 100 - math.sqrt(side**2 - (side/2)**2) +50 -(50/K_C)
+    canvas.delete(spiderG)
+    spiderG = canvas.create_polygon((dataA, dataB, dataC), outline="white")
 
 
 
@@ -150,8 +155,6 @@ for i in range (60):
     pieChart()
     barChart()
     spiderChart()
-
-print (side)
 
 canvas.update()
 canvas.mainloop()
