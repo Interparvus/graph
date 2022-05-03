@@ -3,7 +3,6 @@ import random
 import tkinter
 import math
 
-from numpy import real
 red = "#d41186"
 yellow = "#FFA500"
 blue = "#00CC99"
@@ -128,7 +127,7 @@ def spiderChart():
     
     s = complex(2*sin(1.047198)*100)
     
-    side = real(s)
+    side = s.real
     triangleHeight = 150
     dataS = side/100 * data[2]
     dataS2 = side/100 * data[1]
