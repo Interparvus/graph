@@ -3,7 +3,6 @@ import random
 import tkinter
 import math
 
-from numpy import real
 red = "#d41186"
 yellow = "#FFA500"
 blue = "#00CC99"
@@ -37,6 +36,8 @@ def getData():
     data3 = random.randrange(1,100)
     data = [data1, data2, data3]
     
+    canvas.update
+    canvas.after(1000,getData)
 
 
 def barChart():
@@ -53,6 +54,8 @@ def barChart():
         e += gap + barWidth
         t += 1
         i+=1
+        canvas.update
+        canvas.after(1000,barChart)
 def graph():
     global gap, width, height, barWidth, q, data,barChartHeight,barChartWidth,graphX,graphPos1x,graphPos1y,graphPos2x,graphPos2y,i,gPos1x,gPos1y,gPos2x,gPos2y,Pos1x,Pos1y,Pos2x,Pos2y,red
     
@@ -102,7 +105,8 @@ def graph():
    
     graphX += 7
     i+=1
-
+    canvas.update
+    canvas.after(1000,graph)
 def pieChart():
     global height,width,x1,x2,y1,y2,data,pieCount,pie1,pie2,pie3,red,pieCh
     x1 = width/6
@@ -120,7 +124,8 @@ def pieChart():
         
     canvas.delete(pieCh)
     pieCh = canvas.create_arc((x1,y1,x2,y2), fill=red, outline=red, start=prop(0), extent = prop(pie1/pieCount*100)), canvas.create_arc((x1,y1,x2,y2), fill="#00CC99", outline="#00CC99", start=prop(pie1/pieCount*100), extent = prop(pie2/pieCount*100)),canvas.create_arc((x1,y1,x2,y2), fill="#FFA500", outline="#FFA500", start=prop(pie2/pieCount*100+pie1/pieCount*100), extent = prop(pie3/pieCount*100))
-
+    canvas.update
+    canvas.after(1000,pieChart)
 
 def spiderChart():
     global red,width,height,cntPoint,side,triangleHeight,a,b,s,c,data,dataA,dataB,dataC,dataS,dataS2,K_A,K_B,K_C,spiderG
@@ -128,7 +133,7 @@ def spiderChart():
     
     s = complex(2*sin(1.047198)*100)
     
-    side = real(s)
+    side = s.real
     triangleHeight = 150
     dataS = side/100 * data[2]
     dataS2 = side/100 * data[1]
@@ -146,15 +151,16 @@ def spiderChart():
     canvas.delete(spiderG)
     spiderG = canvas.create_polygon((dataA, dataB, dataC), outline="white")
 
+    canvas.update
+    canvas.after(1000,spiderChart)
 
 
-for i in range (60):
     
-    getData()
-    graph()
-    pieChart()
-    barChart()
-    spiderChart()
+getData()
+graph()
+pieChart()
+barChart()
+spiderChart()
 
-canvas.update()
+
 canvas.mainloop()
